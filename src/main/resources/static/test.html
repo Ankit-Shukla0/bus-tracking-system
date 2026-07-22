@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Bus Location Live Tracker</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/sockjs-client/1.6.1/sockjs.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/stomp.js/2.3.3/stomp.min.js"></script>
+</head>
+<body>
+<h2>Live Bus Location</h2>
+<div id="output">Waiting for updates...</div>
+
+<script>
+    const socket = new SockJS('/ws');
+    const stompClient = Stomp.over(socket);
+
+    stompClient.connect({}, function () {
+        stompClient.subscribe('/topic/bus-location', function (message) {
+            const data = JSON.parse(message.body);
+            document.getElementById('output').innerHTML =
+                "Bus ID: " + data.busId + "<br>" +
+                "Latitude: " + data.latitude + "<br>" +
+                "Longitude: " + data.longitude + "<br>" +
+                "Updated At: " + data.updatedAt;
+        });
+    });
+</script>
+</body>
+</html>

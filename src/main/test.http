@@ -1,0 +1,10 @@
+POST http://localhost:8080/locations
+
+Content-Type: application/json
+
+{
+  "busId": 1,
+  "latitude": 28.7050,
+  "longitude": 77.1030,
+  "updatedAt": "2026-07-20T19:00:00"
+}
